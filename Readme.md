@@ -1,6 +1,6 @@
 ## Spring Redis 并发工具
 
-### 1 在SpringBoot中使用
+### 1 在SpringBoot中注册
 
 * 引入Redis
 ```java
