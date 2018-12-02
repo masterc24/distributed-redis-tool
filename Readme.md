@@ -237,3 +237,52 @@ public class TestRedisRateLimiter {
     }
 }
 ```
+
+### 2在SpringController中使用
+
+* 向Spring注册拦截器
+```java
+@Configuration
+public class RestMvcConfigurerAdapter extends WebMvcConfigurerAdapter {
+    
+    @Bean
+    public RateLimiterInterceptor rateLimiterInterceptor() {
+        return new RateLimiterInterceptor();
+    }
+    
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(rateLimiterInterceptor()).addPathPatterns("/**");
+    }
+}
+
+```
+
+* 在Controller中使用
+```java
+@RestController
+@RequestMapping('/xxx/yyy')
+public class XXXController {
+    
+    @RequestMapping("aaa")
+    @SpringControllerLimiter
+    public Message test() {
+        return null;
+    }
+}
+```
+
+### 3在普通类中使用（必须在Spring AOP容器内，否则需自己做AOP处理）
+```java
+@Service
+public class XXXServiceImpl implements XXXService {
+    
+    @Override
+    @CommonLimiter
+    public Message vvv(){
+        return  null;
+    }
+}
+
+
+```
