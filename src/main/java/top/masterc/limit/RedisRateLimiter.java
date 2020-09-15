@@ -57,11 +57,7 @@ public class RedisRateLimiter {
 
         Object result = limitRequest(connection, key);
 
-        if (FAIL_CODE != (Long) result) {
-            return true;
-        } else {
-            return false;
-        }
+        return FAIL_CODE != (Long) result;
     }
 
     public boolean acquire(String key) {
@@ -71,11 +67,7 @@ public class RedisRateLimiter {
         Object connection = getConnection();
         key = key + System.currentTimeMillis() / 1000;
         Object result = limitRequest(connection, key);
-        if (FAIL_CODE != (Long) result) {
-            return true;
-        } else {
-            return false;
-        }
+        return FAIL_CODE != (Long) result;
     }
 
     private Object limitRequest(Object connection, String key) {

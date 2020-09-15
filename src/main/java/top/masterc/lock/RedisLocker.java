@@ -12,6 +12,7 @@ import top.masterc.util.ScriptUtil;
 
 import java.io.IOException;
 import java.util.Collections;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 基于Redis的分布式锁
@@ -90,11 +91,7 @@ public class RedisLocker {
             }
         }
 
-        if (LOCK_MSG.equals(result)) {
-            return true;
-        } else {
-            return false;
-        }
+        return LOCK_MSG.equals(result);
     }
 
     /**
@@ -124,7 +121,7 @@ public class RedisLocker {
                 break;
             }
 
-            Thread.sleep(sleepTime);
+            TimeUnit.MILLISECONDS.sleep(sleepTime);
         }
 
     }
@@ -192,11 +189,7 @@ public class RedisLocker {
             }
         }
 
-        if (LOCK_MSG.equals(result)) {
-            return true;
-        } else {
-            return false;
-        }
+        return LOCK_MSG.equals(result);
     }
 
 
@@ -229,11 +222,7 @@ public class RedisLocker {
             return false;
         }
 
-        if (UNLOCK_MSG.equals(result)) {
-            return true;
-        } else {
-            return false;
-        }
+        return UNLOCK_MSG.equals(result);
     }
 
 
